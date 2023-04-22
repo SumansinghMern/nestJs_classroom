@@ -12,24 +12,31 @@ export class CourseServices {
   ) {}
 
   getAllCourse(data) {
-    let { skip, limit, search } = data;
+    let { skip, limit, search, teacherId } = data;
     let query = {};
     if (search) {
       query['courseName'] = { $regex: `${search}`, $options: 'i' };
     }
-
-    return new Promise<any>((resolve, reject) => {
-      this.courseModel
-        .find(query)
-        .skip(skip)
-        .limit(limit)
-        .then((doc) => {
-          resolve([false, doc]);
-        })
-        .catch((error) => {
-          resolve([error, {}]);
-        });
-    });
+    if(teacherId){
+      if (Array.isArray(teacherId)){
+        query['teacher']= {$in: teacherId}
+      }else{
+        query['teacher'] = teacherId
+      }
+    }
+    
+      return new Promise<any>((resolve, reject) => {
+        this.courseModel
+          .find(query)
+          .skip(skip)
+          .limit(limit)
+          .then((doc) => {
+            resolve([false, doc]);
+          })
+          .catch((error) => {
+            resolve([error, {}]);
+          });
+      });
   }
 
   getSingleCourse(query){

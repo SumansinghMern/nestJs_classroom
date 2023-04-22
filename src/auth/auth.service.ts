@@ -127,9 +127,10 @@ export class StudentAuthService {
       return { token, role: 'Student', userId: user._id };
     } catch (error) {
       console.log(
-        '🚀 ~ file: auth.service.ts:51 ~ TeacherAuthService ~ signIn ~ error:',
+        '🚀 ~ file: auth.service.ts:129 ~ StudentAuthService ~ signIn ~ error:',
         error,
       );
+
       throw new HttpException('Internal Server Error', 500);
     }
   }

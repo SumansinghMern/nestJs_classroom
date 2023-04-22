@@ -28,7 +28,7 @@ export class TeacherController {
   @Get('courses')
   async getCourses(@Query() query) {
     try {
-      let { skip, limit, search } = query;
+      let { skip, limit, search , teacherId} = query;
       let data = {
         skip: skip ? skip : 0,
         limit: limit ? limit : 10,
@@ -36,8 +36,10 @@ export class TeacherController {
       if (search) {
         data['search'] = search;
       }
-
-      let [error, courses] = await this.courseService.getAllCourse(data);
+      if (teacherId){
+        data['teacherId'] = teacherId;
+      }
+        let [error, courses] = await this.courseService.getAllCourse(data);
       if (error) {
         throw new HttpException(error.message, 500);
       }

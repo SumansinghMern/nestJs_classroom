@@ -37,7 +37,6 @@ export class StudentServices {
     return new Promise<any>((resolve, reject) => {
       this.studentModel
         .findOne(query)
-        .select('-password')
         .then((doc) => {
           resolve([false, doc]);
         })

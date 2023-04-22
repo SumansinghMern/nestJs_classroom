@@ -19,8 +19,8 @@ import { query } from 'express';
 export class StudentController {
   constructor(
     private readonly studentServices: StudentServices,
-    private readonly courseServices: CourseServices
-    ) {}
+    private readonly courseServices: CourseServices,
+  ) {}
 
   @UseGuards(StudentAuthGuard)
   @Get(':id')
@@ -61,11 +61,12 @@ export class StudentController {
     }
   }
 
+  @UseGuards(StudentAuthGuard)
   @Post(':id/takeCourse')
-  async takeCourse(@Param() param, @Body() body){
-    let {id} = param;
+  async takeCourse(@Param() param, @Body() body) {
+    let { id } = param;
 
-    let {coursIds} = body; 
+    let { coursIds } = body;
 
     let [error, student] = await this.studentServices.getStudent({ _id: id });
 
@@ -82,19 +83,21 @@ export class StudentController {
       { courses: presentCources },
     );
 
-    if(err){
+    if (err) {
       throw new HttpException('Internal Server Error', 500);
     }
 
-    var [err, course] = await this.courseServices.getSingleCourse({ _id: coursIds })
+    var [err, course] = await this.courseServices.getSingleCourse({
+      _id: coursIds,
+    });
 
-    if(err){
+    if (err) {
       throw new HttpException('Internal Server Error', 500);
     }
 
     let enrolledStudents = course?.students.map((st) => st) || [];
 
-    enrolledStudents.push(updatedStudent._id)
+    enrolledStudents.push(updatedStudent._id);
 
     var [err1, updatedCources] = await this.courseServices.updateCourse(
       { _id: coursIds },
