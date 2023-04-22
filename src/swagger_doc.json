@@ -1,0 +1,80 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "ClassRoom API Docs's",
+        "version": "1.0.0",
+        "title": "ClassRoom Trade API",
+        "contact": {
+            "email": "sumansingh.dev7870@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "schemes": [
+        "http","https"
+    ],
+    "basePath": "/",
+    "paths": {
+        "/auth/teacherSignUp": {
+            "post": {
+                "summary": "Register as Teacher",
+                "description": "Used mainly by Authentication Server ",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "exprience": {
+                                    "type": "integer"
+                                },
+                                "password": {
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "success": {
+                        "description": "Successful Response",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "data": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "failed": {
+                        "description": "Failed  Response -> Here Success value will be: 'false' with Status as 200",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+
+    }
+}
